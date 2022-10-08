@@ -23,5 +23,10 @@ public class DadosMap : IEntityTypeConfiguration<Dados>
             .Property(x => x.ProdutoQuimico)
             .HasColumnType("varchar(100)")
             .IsRequired();
+
+        builder
+            .Property(x => x.NivelInformacao)
+            .HasColumnType("int")
+            .IsRequired();
     }
 }

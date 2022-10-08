@@ -14,11 +14,11 @@ public class BaseRepositorio<T> : IDisposable, IBaseRepositorio<T> where T : cla
     {
         _contexto = contexto;
     }
-    public IQueryable<T> Selecionar()
-        => _contexto.Set<T>();
+    public async Task<List<T>> Selecionar()
+        => await _contexto.Set<T>().ToListAsync();
 
-    public Task<T> SelecionarPorId(Expression<Func<T, bool>> predicate)
-        => _contexto.Set<T>().SingleOrDefaultAsync(predicate);
+    public async Task<T> SelecionarPorId(Expression<Func<T, bool>> predicate)
+        => await _contexto.Set<T>().SingleOrDefaultAsync(predicate);
 
     public async Task Adicionar(T entidade)
     {

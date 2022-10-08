@@ -1,4 +1,5 @@
-﻿using App.Models;
+﻿using App.Application;
+using App.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,27 +7,19 @@ namespace App.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IDadosAplicacao _dadosAplicacao;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IDadosAplicacao dadosAplicacao)
         {
-            _logger = logger;
+            _dadosAplicacao = dadosAplicacao;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var dados = await _dadosAplicacao.SelecionarTodosDados();
+
+            return View(dados);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

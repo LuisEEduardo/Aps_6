@@ -1,8 +1,31 @@
-﻿@{
+﻿@model List<DetalharDadoDTO>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h2 class="display-4">Dados</h2>
+
+    <table class="table table-striped table-hover table-bordered table-hover">
+        <thead class="thead-light">
+            <tr class="shadow-sm text-center">
+                <th>Propriedade Rural</th>
+                <th>Produto Quimico</th>
+                <th>Nível informação</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dado in Model)
+            {
+                <tr class="text-center">
+
+                    <td>@dado.Propriedade</td>
+                    <td>@dado.ProdutoQuimico</td>
+                    <td>@dado.NivelInformacao</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
 </div>

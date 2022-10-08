@@ -1,3 +1,5 @@
+using App.Application;
+using App.Application.implementation;
 using App.Data;
 using App.Repositorio.Implementacao;
 using App.Repositorio.Implementacao.ContextoDados;
@@ -19,6 +21,11 @@ builder.Services.AddDbContext<Contexto>(options =>
 builder.Services.AddScoped(typeof(IBaseRepositorio<>), typeof(BaseRepositorio<>));
 builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
 builder.Services.AddScoped<IDadosRepositorio, DadosRepositorio>();
+
+builder.Services.AddScoped<IUsuarioAplicacao, UsuarioAplicacao>();
+builder.Services.AddScoped<IDadosAplicacao, DadosAplicacao>();
+
+
 
 var app = builder.Build();
 
