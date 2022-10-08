@@ -1,4 +1,5 @@
-﻿using App.Models.ContextoDados;
+﻿using App.Data.Maps;
+using App.Models.ContextoDados;
 using App.Models.ContextoUsuario;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +17,8 @@ public class Contexto : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // mapeamentos 
+        modelBuilder.ApplyConfiguration(new UsuarioMap());
+        modelBuilder.ApplyConfiguration(new DadosMap());
 
         base.OnModelCreating(modelBuilder);
     }

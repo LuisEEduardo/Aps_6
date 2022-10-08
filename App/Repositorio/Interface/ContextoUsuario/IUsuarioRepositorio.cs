@@ -2,6 +2,6 @@
 
 namespace App.Repositorio.Interface.ContextoUsuario;
 
-public interface IUsuarioInterface : IBaseRepositorio<Usuario>
+public interface IUsuarioRepositorio : IBaseRepositorio<Usuario>
 {
 }

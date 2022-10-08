@@ -1,7 +1,24 @@
+using App.Data;
+using App.Repositorio.Implementacao;
+using App.Repositorio.Implementacao.ContextoDados;
+using App.Repositorio.Implementacao.ContextoUsuario;
+using App.Repositorio.Interface;
+using App.Repositorio.Interface.ContextoDados;
+using App.Repositorio.Interface.ContextoUsuario;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<Contexto>(options => 
+    options.UseNpgsql(builder.Configuration.GetConnectionString("UserDatabase"))
+);
+
+builder.Services.AddScoped(typeof(IBaseRepositorio<>), typeof(BaseRepositorio<>));
+builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
+builder.Services.AddScoped<IDadosRepositorio, DadosRepositorio>();
 
 var app = builder.Build();
 
