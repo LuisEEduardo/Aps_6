@@ -14,6 +14,7 @@ namespace App.Controllers
             _dadosAplicacao = dadosAplicacao;
         }
 
+        [HttpGet()]
         public async Task<IActionResult> Index()
         {
             var dados = await _dadosAplicacao.SelecionarTodosDados();

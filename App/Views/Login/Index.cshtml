@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>WebcamJS - Captura Imagem</title>
@@ -9,7 +10,8 @@
             font-family: Helvetica, sans-serif;
         }
 
-        h2, h3 {
+        h2,
+        h3 {
             margin-top: 0;
         }
 
@@ -28,12 +30,12 @@
         }
     </style>
 </head>
+
 <body class="container">
     <br />
-    <div class="col-md-2"></div>
-    <div class="col-md-4">
+
+    <div class="col-md-6">
         <div class="panel panel-default">
-            <div class="panel-heading">Camera</div>
             <div class="panel-body">
                 <div id="mac_camera"></div>
                 <!-- botão para tirar foto -->
@@ -43,7 +45,8 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+
+    <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">Foto Capturada</div>
             <div class="panel-body">
@@ -53,7 +56,7 @@
             <br />
         </div>
     </div>
-    <div class="col-md-2">    </div>
+
     <!-- inclui a livraria javascript -->
     <script src="~/webcamjs/webcam.js"></script>
     <!-- Configura e anexa a camera -->
@@ -74,11 +77,15 @@
                 // exibe o resultado na pagina
                 document.getElementById('resultado').innerHTML =
                     '<img src="' + data_uri + '"/>';
-                Webcam.upload(data_uri, '/Camera/CapturaImagemPost', function(code, text) {
-                    alert('Imagem Capturada');
-                });
+                Webcam.upload(data_uri,
+                    '/Login/CapturaImagem',
+                    function(code, text) {
+                        alert('Imagem Capturada');
+                    });
             });
-        }
+        };
+
     </script>
 </body>
+
 </html>
