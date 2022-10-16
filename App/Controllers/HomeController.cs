@@ -15,7 +15,7 @@ namespace App.Controllers
         }
 
         [HttpGet()]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
             var dados = await _dadosAplicacao.SelecionarTodosDados();
 
