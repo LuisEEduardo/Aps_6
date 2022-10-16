@@ -62,7 +62,7 @@ namespace App.Controllers
                 var id = int.Parse(contents.Substring(contents.IndexOf("[") + 1, contents.IndexOf(",") - 1).ToString());
 
                 if (response.IsSuccessStatusCode)
-                    return RedirectToAction("Index", "Home", new { id });
+                    return RedirectToActionPermanent("Index", "Home", new { id });
 
                 return RedirectToAction("Index");
 

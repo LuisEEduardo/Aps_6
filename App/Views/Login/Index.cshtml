@@ -34,28 +34,28 @@
 <body class="container">
     <br />
 
-    <div class="col-md-6">
+    <div class="col-md-6 align-content-center">
         <div class="panel panel-default">
             <div class="panel-body">
                 <div id="mac_camera"></div>
                 <!-- botão para tirar foto -->
                 <form>
-                    <input type="button" class="btn btn-success" value="Capturar Imagem" onClick="captura_imagem()">
+                    <input id="btnTirarFoto" type="button" class="btn btn-success" value="Capturar Imagem" onClick="captura_imagem()">
                 </form>
             </div>
         </div>
     </div>
 
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">Foto Capturada</div>
-            <div class="panel-body">
-                <div id="resultado">Sua imagem capturada vai aparecer aqui.</div>
-            </div>
-            <br />
-            <br />
-        </div>
+    @*<div class="col-md-6">
+    <div class="panel panel-default">
+    <div class="panel-heading">Foto Capturada</div>
+    @*<div class="panel-body">
+    <div id="resultado">Sua imagem capturada vai aparecer aqui.</div>
     </div>
+    <br />
+    <br />
+    </div>
+    </div>*@
 
     <!-- inclui a livraria javascript -->
     <script src="~/webcamjs/webcam.js"></script>
@@ -75,14 +75,18 @@
             // tira a foto e obtem os dados da imagem
             Webcam.snap(function(data_uri) {
                 // exibe o resultado na pagina
-                document.getElementById('resultado').innerHTML =
-                    '<img src="' + data_uri + '"/>';
-                Webcam.upload(data_uri,
-                    '/Login/CapturaImagem',
-                    function(code, text) {
-                        alert('Imagem Capturada');
-                    });
+                //document.getElementById('resultado').innerHTML =
+                //    '<img src="' + data_uri + '"/>';
+                Webcam.upload(data_uri, '/Login/CapturaImagem')
+                //, function(code, text) {
+                //    alert('Imagem Capturada');
+                //});
+                Webcam.reset();
             });
+
+            var btn = document.querySelector("#btnTirarFoto");
+
+            btn.disabled = true;
         };
 
     </script>
