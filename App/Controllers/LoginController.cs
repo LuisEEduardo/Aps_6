@@ -14,63 +14,56 @@ namespace App.Controllers
         [HttpPost()]
         public async Task<IActionResult> CapturaImagem(string name, [FromServices] IWebHostEnvironment _enviroment)
         {
-            try
+
+            var files = HttpContext.Request.Form.Files;
+            string filePath = "";
+
+            if (files != null)
             {
-                var files = HttpContext.Request.Form.Files;
-                string filePath = "";
-
-                if (files != null)
+                foreach (var file in files)
                 {
-                    foreach (var file in files)
+                    if (file.Length > 0)
                     {
-                        if (file.Length > 0)
+                        var fileName = file.FileName;
+                        var myUniqueFileName = Convert.ToString(Guid.NewGuid());
+                        var fileExtension = Path.GetExtension(fileName);
+                        var newFileName = string.Concat(myUniqueFileName, fileExtension);
+                        filePath = Path.Combine(_enviroment.WebRootPath, "CameraPhotos") + $@"\{newFileName}";
+                        if (!string.IsNullOrEmpty(filePath))
                         {
-                            var fileName = file.FileName;
-                            var myUniqueFileName = Convert.ToString(Guid.NewGuid());
-                            var fileExtension = Path.GetExtension(fileName);
-                            var newFileName = string.Concat(myUniqueFileName, fileExtension);
-                            filePath = Path.Combine(_enviroment.WebRootPath, "CameraPhotos") + $@"\{newFileName}";
-                            if (!string.IsNullOrEmpty(filePath))
-                            {
-                                ArmazenarDiretorio(file, filePath);
-                            }
-
-                            //imageBytes = System.IO.File.ReadAllBytes(filePath);                            
+                            ArmazenarDiretorio(file, filePath);
                         }
-                    }                    
+
+                        //imageBytes = System.IO.File.ReadAllBytes(filePath);                            
+                    }
                 }
-                else
-                {
-                    return Json(false);
-                }
-
-                //var fileOpen = new FileStream(filePath, FileMode.Open);
-
-                using var cliente = new HttpClient();
-
-                cliente.BaseAddress = new Uri("http://127.0.0.1:5000");
-
-                var reconhecimentoFacial = new ReconhecimentoFacialDTO()
-                {
-                    FilePath = filePath
-                };
-                
-                var response = await cliente.PostAsJsonAsync<ReconhecimentoFacialDTO>("/reconhecimento", reconhecimentoFacial);
-
-                var contents = await response.Content.ReadAsStringAsync();
-
-                var id = int.Parse(contents.Substring(contents.IndexOf("[") + 1, contents.IndexOf(",") - 1).ToString());
-
-                if (response.IsSuccessStatusCode)
-                    return RedirectToActionPermanent("Index", "Home", new { id });
-
-                return RedirectToAction("Index");
-
             }
-            catch (Exception)
+            else
             {
                 return Json(false);
-            }            
+            }
+
+            //var fileOpen = new FileStream(filePath, FileMode.Open);
+
+            using var cliente = new HttpClient();
+
+            cliente.BaseAddress = new Uri("http://127.0.0.1:5000");
+
+            var reconhecimentoFacial = new ReconhecimentoFacialDTO()
+            {
+                FilePath = filePath
+            };
+
+            var response = await cliente.PostAsJsonAsync<ReconhecimentoFacialDTO>("/reconhecimento", reconhecimentoFacial);
+
+            var contents = await response.Content.ReadAsStringAsync();
+
+            var id = int.Parse(contents.Substring(contents.IndexOf("[") + 1, contents.IndexOf(",") - 1).ToString());
+
+            if (response.IsSuccessStatusCode)
+                return RedirectToAction("Index", "Home", new { id });
+
+            return RedirectToAction("Index");
         }
 
 
