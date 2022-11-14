@@ -1,7 +1,4 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-
-<head>
+﻿<head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>WebcamJS - Captura Imagem</title>
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
@@ -77,18 +74,22 @@
                 // exibe o resultado na pagina
                 //document.getElementById('resultado').innerHTML =
                 //    '<img src="' + data_uri + '"/>';
-                Webcam.upload(data_uri, '/Login/CapturaImagem')
-                //, function(code, text) {
-                //    alert('Imagem Capturada');
-                //});
+                Webcam.upload(data_uri, '/Login/CapturaImagem', function(code, data) {
+                    console.log(data);
+                    return fetch('/Home/Index', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: data }); // body: JSON.stringify(data)
+                })                
                 Webcam.reset();
                 Webcam.off();
             });
+
+
 
             var btn = document.querySelector("#btnTirarFoto");
 
             btn.disabled = true;
         };
+
+
 
     </script>
 </body>
