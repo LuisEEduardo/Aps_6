@@ -7,6 +7,7 @@ using App.Repositorio.Implementacao.ContextoUsuario;
 using App.Repositorio.Interface;
 using App.Repositorio.Interface.ContextoDados;
 using App.Repositorio.Interface.ContextoUsuario;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<Contexto>(options => 
+builder.Services.AddDbContext<Contexto>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("UserDatabase"))
 );
 
@@ -25,7 +26,9 @@ builder.Services.AddScoped<IDadosRepositorio, DadosRepositorio>();
 builder.Services.AddScoped<IUsuarioAplicacao, UsuarioAplicacao>();
 builder.Services.AddScoped<IDadosAplicacao, DadosAplicacao>();
 
+builder.Services.AddCors();
 
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -37,12 +40,27 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
+//app.UseCors();
+app.UseCors(options =>
+{
+    options
+        .AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyOrigin()
+        .SetIsOriginAllowed(origin => true);
+    //.AllowCredentials();
+});
+
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",
