@@ -71,39 +71,33 @@
         function captura_imagem() {
             // tira a foto e obtem os dados da imagem
             Webcam.snap(function(data_uri) {
-                // exibe o resultado na pagina
-                //document.getElementById('resultado').innerHTML =
-                //    '<img src="' + data_uri + '"/>';
                 Webcam.upload(data_uri, '/Login/CapturaImagem', function(code, data) {
                     console.log(data);
-                    //return fetch('/Home/Index', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: data }); // body: JSON.stringify(data)
                     fetch('/Home/Index', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: data })
                         .then((data) => {
                             console.log(data)
+                            console.log(data.body)
+                            console.log(data.headers)
+
+                            const result = data.json()
+                            console.log(result)
+                            console.log(result.body)
+                            console.log(result[0])  
+                            console.log(result.id)  
+                                                                          
+                            // fetch('/Home/Teste', { method: 'GET', headers: { 'Content-Type': 'application/json' } })                                                       
+                            window.location.href = "/Home/Teste";
                         });
-                    //EnviarDados(data)
                 })
                 Webcam.reset();
                 Webcam.off();
             });
-
-
 
             var btn = document.querySelector("#btnTirarFoto");
 
             btn.disabled = true;
         };
 
-        function EnviarDados(urlImg) {
-            fetch('/Home/Index', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: urlImg })
-                .then((data) => {
-                    console.log('Chegou', data)
-
-                })
-                .catch((error) => {
-                    console.log('Error:', error)
-                }); // body: JSON.stringify(data)
-        }
 
     </script>
 </body>

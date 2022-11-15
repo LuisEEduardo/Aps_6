@@ -35,18 +35,16 @@ namespace App.Controllers
             var contents = await response.Content.ReadAsStringAsync();
 
             var id = int.Parse(contents.Substring(contents.IndexOf("[") + 1, contents.IndexOf(",") - 1).ToString());
-
-            var dados = await _dadosAplicacao.SelecionarTodosDados();
-
-            //return RedirectToAction("Teste", new { dados });
-
-            return Json(new { dados });
+                       
+            return Ok(id);
         }
 
-        [HttpGet("teste")]
-        public IActionResult Teste(List<DetalharDadoDTO> detalharDadoDTOs)
+        [HttpGet()]
+        public async Task<IActionResult> Teste()
         {
-            return View("Index", detalharDadoDTOs);
+            var dados = await _dadosAplicacao.SelecionarTodosDados();
+
+            return View("Index", dados);
         }
 
         private void ArmazenarDiretorio(IFormFile file, string fileName)
