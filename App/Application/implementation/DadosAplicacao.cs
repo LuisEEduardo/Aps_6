@@ -30,4 +30,23 @@ public class DadosAplicacao : IDadosAplicacao
 
         return detalharDadoDTOs;
     }
+
+    public async Task<List<DetalharDadoDTO>> SelecionarTodosDadosPorTipoPermissao(int idUsuario)
+    {
+        var dados = await _dadosRepositorio.SelecionarPorTipoPermissao(idUsuario);
+
+        var dto = new List<DetalharDadoDTO>();
+
+        foreach (var dado in dados)
+        {
+            dto.Add(new DetalharDadoDTO()
+            {
+                ProdutoQuimico = dado.ProdutoQuimico,
+                Propriedade = dado.Propriedade,
+                NivelInformacao = dado.NivelInformacao
+            });
+        }
+
+        return dto;
+    }
 }

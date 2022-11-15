@@ -43,17 +43,6 @@
         </div>
     </div>
 
-    @*<div class="col-md-6">
-    <div class="panel panel-default">
-    <div class="panel-heading">Foto Capturada</div>
-    @*<div class="panel-body">
-    <div id="resultado">Sua imagem capturada vai aparecer aqui.</div>
-    </div>
-    <br />
-    <br />
-    </div>
-    </div>*@
-
     <!-- inclui a livraria javascript -->
     <script src="~/webcamjs/webcam.js"></script>
     <!-- Configura e anexa a camera -->
@@ -73,21 +62,22 @@
             Webcam.snap(function(data_uri) {
                 Webcam.upload(data_uri, '/Login/CapturaImagem', function(code, data) {
                     console.log(data);
-                    fetch('/Home/Index', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: data })
-                        .then((data) => {
-                            console.log(data)
-                            console.log(data.body)
-                            console.log(data.headers)
-
-                            const result = data.json()
-                            console.log(result)
-                            console.log(result.body)
-                            console.log(result[0])  
-                            console.log(result.id)  
-                                                                          
-                            // fetch('/Home/Teste', { method: 'GET', headers: { 'Content-Type': 'application/json' } })                                                       
-                            window.location.href = "/Home/Teste";
-                        });
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Home/Index',
+                        data: {
+                            "filePath": data
+                        },
+                        async: false,
+                        success: function(data) {
+                            var id = JSON.parse(data);
+                            console.log(id);
+                            window.location.href = "/Home/Teste/" + id;
+                        },
+                        error: function(xhr, status, error) {
+                            alert(error);
+                        }
+                    })
                 })
                 Webcam.reset();
                 Webcam.off();

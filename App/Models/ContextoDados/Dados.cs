@@ -11,7 +11,7 @@ public class Dados
         NivelInformacao = nivelInformacao;
     }
 
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public string Propriedade { get; set; }
     public string ProdutoQuimico { get; set; }
     public NivelInformacao NivelInformacao { get; set; }
