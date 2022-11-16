@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Net;
+using System.Text;
 
 namespace App.Controllers
 {
@@ -21,6 +22,7 @@ namespace App.Controllers
             _usuarioAplicacao = usuarioAplicacao;
         }
 
+
         [HttpPost()]
         public async Task<IActionResult> Index(string filePath)
         {
@@ -30,7 +32,7 @@ namespace App.Controllers
 
             var reconhecimentoFacial = new ReconhecimentoFacialDTO()
             {
-                FilePath = filePath
+                FilePath = @"C:\dev\faculdade\aps_6_semestre\Aps6\App\wwwroot\CameraPhotos\" + filePath.Substring(1).Remove(40)
             };
 
             var response = await cliente.PostAsJsonAsync<ReconhecimentoFacialDTO>("/reconhecimento", reconhecimentoFacial);
@@ -41,27 +43,6 @@ namespace App.Controllers
 
             return Json(id);
         }
-
-        //[HttpPost()]
-        //public async Task<IActionResult> Index(string filePath)
-        //{
-        //    using var cliente = new HttpClient();
-
-        //    cliente.BaseAddress = new Uri("http://127.0.0.1:5000");
-
-        //    var reconhecimentoFacial = new ReconhecimentoFacialDTO()
-        //    {
-        //        FilePath = filePath
-        //    };
-
-        //    var response = await cliente.PostAsJsonAsync<ReconhecimentoFacialDTO>("/reconhecimento", reconhecimentoFacial);
-
-        //    var contents = await response.Content.ReadAsStringAsync();
-
-        //    var id = int.Parse(contents.Substring(contents.IndexOf("[") + 1, contents.IndexOf(",") - 1).ToString());
-
-        //    return Json(id);        
-        //}
 
 
 

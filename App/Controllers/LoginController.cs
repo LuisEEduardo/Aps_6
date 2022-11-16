@@ -30,11 +30,15 @@ namespace App.Controllers
                         var myUniqueFileName = Convert.ToString(Guid.NewGuid());
                         var fileExtension = Path.GetExtension(fileName);
                         var newFileName = string.Concat(myUniqueFileName, fileExtension);
+                                               
                         filePath = Path.Combine(_enviroment.WebRootPath, "CameraPhotos") + $@"\{newFileName}";
+
                         if (!string.IsNullOrEmpty(filePath))
                         {
                             ArmazenarDiretorio(file, filePath);
                         }
+
+                        filePath = newFileName;
 
                         //imageBytes = System.IO.File.ReadAllBytes(filePath);                            
                     }

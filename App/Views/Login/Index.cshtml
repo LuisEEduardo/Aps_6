@@ -57,7 +57,7 @@
     </script>
     <!-- Codigo para tirar a foto e exibir localmente -->
     <script language="JavaScript">
-        function captura_imagem() {
+        async function captura_imagem() {
             // tira a foto e obtem os dados da imagem
             Webcam.snap(function(data_uri) {
                 Webcam.upload(data_uri, '/Login/CapturaImagem', function(code, data) {
@@ -68,7 +68,7 @@
                         data: {
                             "filePath": data
                         },
-                        async: false,
+                        async: true,
                         success: function(data) {
                             var id = JSON.parse(data);
                             console.log(id);
