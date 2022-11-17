@@ -2,7 +2,7 @@
 
 public enum TipoPermissao
 {
-    comum = 1,
+    comum = 3,
     diretores = 2,
-    ministroMeioAmbiente = 3
+    ministroMeioAmbiente = 1
 }

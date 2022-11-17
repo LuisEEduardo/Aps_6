@@ -38,9 +38,7 @@ namespace App.Controllers
                             ArmazenarDiretorio(file, filePath);
                         }
 
-                        filePath = newFileName;
-
-                        //imageBytes = System.IO.File.ReadAllBytes(filePath);                            
+                        filePath = newFileName;                                              
                     }
                 }
             }
@@ -49,7 +47,6 @@ namespace App.Controllers
                 return Json(false);
             }
 
-            // return RedirectToAction("Index", "Home", new ReconhecimentoFacialDTO { FilePath = filePath });
             return Json(filePath);
         }
 
