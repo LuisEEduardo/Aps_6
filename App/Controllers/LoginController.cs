@@ -16,7 +16,6 @@ namespace App.Controllers
         [HttpPost()]
         public IActionResult CapturaImagem(string name, [FromServices] IWebHostEnvironment _enviroment)
         {
-
             var files = HttpContext.Request.Form.Files;
             string filePath = "";
 
@@ -50,7 +49,6 @@ namespace App.Controllers
             return Json(filePath);
         }
 
-
         private void ArmazenarDiretorio(IFormFile file, string fileName)
         {
             using (FileStream fs = System.IO.File.Create(fileName))
@@ -59,8 +57,5 @@ namespace App.Controllers
                 fs.Flush();
             }
         }
-
-
-
     }
 }

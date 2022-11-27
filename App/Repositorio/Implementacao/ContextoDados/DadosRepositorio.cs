@@ -23,12 +23,12 @@ public class DadosRepositorio : BaseRepositorio<Dados>, IDadosRepositorio
         }
         else if (tipoPermissao == 2)
         {
-            dados = await query.Where(x => ((int)x.NivelInformacao) != 3).ToListAsync();
+            dados = await query.Where(x => ((int)x.NivelInformacao) != 1).ToListAsync();
         }
         else if (tipoPermissao == 3)
         {
             dados = await query
-                            .Where(x => ((int)x.NivelInformacao) != 3 && ((int)x.NivelInformacao) != 2)
+                            .Where(x => ((int)x.NivelInformacao) == 3)
                             .ToListAsync();
         }
 
